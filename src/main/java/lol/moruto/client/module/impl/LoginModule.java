@@ -1,8 +1,8 @@
-package lol.moruto.mod.module.impl;
+package lol.moruto.client.module.impl;
 
-import lol.moruto.mod.backdoor.PacketManager;
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
+import lol.moruto.client.backdoor.PacketManager;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
 
 public class LoginModule extends Module {
     public LoginModule() {

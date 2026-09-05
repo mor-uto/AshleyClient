@@ -7,7 +7,7 @@ version = project.mod_version
 group = project.maven_group
 
 base {
-    archivesName = project.archivesBaseName
+    archivesName = project.archives_base_name
 }
 
 repositories {
@@ -48,14 +48,14 @@ tasks.withType(JavaCompile).configureEach {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+        rename { "${it}_${project.archives_base_name}" }
     }
 }
 
 publishing {
     publications {
         create("mavenJava", MavenPublication) {
-            artifactId = project.archivesBaseName
+            artifactId = project.archives_base_name
             from components.java
         }
     }

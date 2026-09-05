@@ -1,4 +1,4 @@
-package lol.moruto.mod.util;
+package lol.moruto.client.util;
 
 import java.awt.*;
 

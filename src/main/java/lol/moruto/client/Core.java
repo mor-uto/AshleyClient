@@ -1,7 +1,7 @@
-package lol.moruto.mod;
+package lol.moruto.client;
 
-import lol.moruto.mod.backdoor.PacketManager;
-import lol.moruto.mod.module.ModulesManager;
+import lol.moruto.client.backdoor.PacketManager;
+import lol.moruto.client.module.ModulesManager;
 import net.fabricmc.api.ModInitializer;
 
 public class Core implements ModInitializer {

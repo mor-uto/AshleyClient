@@ -1,8 +1,8 @@
-package lol.moruto.mod.module.impl.movement;
+package lol.moruto.client.module.impl.movement;
 
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.module.impl.setting.NumberSetting;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.module.impl.setting.NumberSetting;
 import net.minecraft.util.math.Vec3d;
 
 public class Speed extends Module {

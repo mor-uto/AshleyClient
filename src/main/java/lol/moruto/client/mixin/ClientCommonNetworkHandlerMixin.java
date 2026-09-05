@@ -1,6 +1,6 @@
-package lol.moruto.mod.mixin;
+package lol.moruto.client.mixin;
 
-import lol.moruto.mod.Core;
+import lol.moruto.client.Core;
 import net.minecraft.client.network.ClientCommonNetworkHandler;
 import net.minecraft.network.packet.c2s.common.ResourcePackStatusC2SPacket;
 import net.minecraft.network.packet.s2c.common.ResourcePackSendS2CPacket;

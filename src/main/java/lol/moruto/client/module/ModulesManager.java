@@ -1,14 +1,10 @@
-package lol.moruto.mod.module;
+package lol.moruto.client.module;
 
-import lol.moruto.mod.module.impl.PlaceholderModule;
-import lol.moruto.mod.module.impl.LoginModule;
-import lol.moruto.mod.module.impl.gui.ArrayList;
-import lol.moruto.mod.module.impl.gui.Fps;
-import lol.moruto.mod.module.impl.misc.AutoRespawn;
-import lol.moruto.mod.module.impl.misc.IgnoreResourcePack;
-import lol.moruto.mod.module.impl.misc.SpamPackets;
-import lol.moruto.mod.module.impl.movement.*;
-import lol.moruto.mod.ui.NotificationManager;
+import lol.moruto.client.module.impl.*;
+import lol.moruto.client.module.impl.gui.*;
+import lol.moruto.client.module.impl.misc.*;
+import lol.moruto.client.module.impl.movement.*;
+import lol.moruto.client.ui.NotificationManager;
 
 import java.util.List;
 import java.util.stream.Collectors;

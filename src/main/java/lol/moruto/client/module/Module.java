@@ -1,4 +1,4 @@
-package lol.moruto.mod.module;
+package lol.moruto.client.module;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

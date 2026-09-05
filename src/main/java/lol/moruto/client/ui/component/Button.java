@@ -1,4 +1,4 @@
-package lol.moruto.mod.ui.component;
+package lol.moruto.client.ui.component;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;

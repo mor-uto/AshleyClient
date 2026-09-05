@@ -1,14 +1,13 @@
-package lol.moruto.mod.ui;
+package lol.moruto.client.ui;
 
-import lol.moruto.mod.Core;
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.module.ModuleSetting;
-import lol.moruto.mod.module.impl.setting.NumberSetting;
-import lol.moruto.mod.ui.component.CategoryButton;
-
+import lol.moruto.client.Core;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.ModuleSetting;
+import lol.moruto.client.module.impl.setting.NumberSetting;
+import lol.moruto.client.ui.component.CategoryButton;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import lol.moruto.client.module.Module;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -133,8 +132,7 @@ public class ClickGUI extends Screen {
     }
 
     private void renderModuleButton(DrawContext context, Module module, int x, int y, int width, int mouseX, int mouseY) {
-        boolean hovered = mouseX >= x && mouseX <= x + width &&
-                mouseY >= y && mouseY <= y + MODULE_HEIGHT;
+        boolean hovered = mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + MODULE_HEIGHT;
 
         boolean enabled = module.isToggled();
 

@@ -1,10 +1,8 @@
-package lol.moruto.mod.module.impl;
+package lol.moruto.client.module.impl;
 
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.module.impl.setting.BooleanSetting;
-import lol.moruto.mod.module.impl.setting.ModeSetting;
-import lol.moruto.mod.module.impl.setting.NumberSetting;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.module.impl.setting.*;
 
 public class PlaceholderModule extends Module {
     public PlaceholderModule(String name, Category category) {

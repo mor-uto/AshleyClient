@@ -1,4 +1,4 @@
-package lol.moruto.mod.mixin;
+package lol.moruto.client.mixin;
 
 import net.minecraft.client.session.telemetry.TelemetryManager;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,7 +1,8 @@
-package lol.moruto.mod.ui.component;
+package lol.moruto.client.ui.component;
 
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.ui.ClickGUI;
+
+import lol.moruto.client.module.Category;
+import lol.moruto.client.ui.ClickGUI;
 
 public class CategoryButton extends Button {
 

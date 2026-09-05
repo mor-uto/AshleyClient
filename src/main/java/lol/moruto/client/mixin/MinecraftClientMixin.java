@@ -1,7 +1,7 @@
-package lol.moruto.mod.mixin;
+package lol.moruto.client.mixin;
 
-import lol.moruto.mod.Core;
-import lol.moruto.mod.module.Module;
+import lol.moruto.client.Core;
+import lol.moruto.client.module.Module;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

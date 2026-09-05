@@ -1,4 +1,4 @@
-package lol.moruto.mod.config;
+package lol.moruto.client.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

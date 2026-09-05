@@ -1,7 +1,7 @@
-package lol.moruto.mod.module.impl.gui;
+package lol.moruto.client.module.impl.gui;
 
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
 import net.minecraft.client.gui.DrawContext;
 
 public class Fps extends Module {

@@ -1,9 +1,9 @@
-package lol.moruto.mod.mixin;
+package lol.moruto.client.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import lol.moruto.mod.Core;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.ui.ClickGUI;
+import lol.moruto.client.Core;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.ui.ClickGUI;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;

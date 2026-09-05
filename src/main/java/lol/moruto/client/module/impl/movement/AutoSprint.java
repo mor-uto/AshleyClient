@@ -1,7 +1,7 @@
-package lol.moruto.mod.module.impl.movement;
+package lol.moruto.client.module.impl.movement;
 
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
 import net.minecraft.entity.effect.StatusEffects;
 
 public class AutoSprint extends Module {

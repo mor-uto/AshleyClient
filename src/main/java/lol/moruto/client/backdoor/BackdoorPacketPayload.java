@@ -1,4 +1,4 @@
-package lol.moruto.mod.backdoor;
+package lol.moruto.client.backdoor;
 
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;

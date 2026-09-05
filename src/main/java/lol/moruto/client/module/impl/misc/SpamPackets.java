@@ -1,8 +1,8 @@
-package lol.moruto.mod.module.impl.misc;
+package lol.moruto.client.module.impl.misc;
 
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.ui.NotificationManager;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.ui.NotificationManager;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.network.packet.BrandCustomPayload;
 

@@ -1,4 +1,4 @@
-package lol.moruto.mod.config;
+package lol.moruto.client.config;
 
 import com.google.gson.*;
 import java.io.*;

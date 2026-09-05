@@ -1,6 +1,6 @@
-package lol.moruto.mod.module.impl.setting;
+package lol.moruto.client.module.impl.setting;
 
-import lol.moruto.mod.module.ModuleSetting;
+import lol.moruto.client.module.ModuleSetting;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

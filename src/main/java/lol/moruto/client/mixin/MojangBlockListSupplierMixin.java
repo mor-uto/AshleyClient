@@ -1,4 +1,4 @@
-package lol.moruto.mod.mixin;
+package lol.moruto.client.mixin;
 
 import com.mojang.patchy.MojangBlockListSupplier;
 import org.spongepowered.asm.mixin.Mixin;

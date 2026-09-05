@@ -1,9 +1,9 @@
-package lol.moruto.mod.module.impl.gui;
+package lol.moruto.client.module.impl.gui;
 
-import lol.moruto.mod.Core;
-import lol.moruto.mod.module.Category;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.util.ColorUtil;
+import lol.moruto.client.Core;
+import lol.moruto.client.module.Category;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.util.ColorUtil;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.HashMap;

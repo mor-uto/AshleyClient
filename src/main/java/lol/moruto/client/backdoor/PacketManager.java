@@ -1,6 +1,6 @@
-package lol.moruto.mod.backdoor;
+package lol.moruto.client.backdoor;
 
-import lol.moruto.mod.Core;
+import lol.moruto.client.Core;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;

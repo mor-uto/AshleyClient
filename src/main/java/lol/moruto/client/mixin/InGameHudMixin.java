@@ -1,8 +1,8 @@
-package lol.moruto.mod.mixin;
+package lol.moruto.client.mixin;
 
-import lol.moruto.mod.Core;
-import lol.moruto.mod.module.Module;
-import lol.moruto.mod.ui.NotificationManager;
+import lol.moruto.client.Core;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.ui.NotificationManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

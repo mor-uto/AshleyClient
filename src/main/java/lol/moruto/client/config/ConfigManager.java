@@ -1,4 +1,4 @@
-package lol.moruto.mod.config;
+package lol.moruto.client.config;
 
 import java.lang.reflect.*;
 import java.util.List;

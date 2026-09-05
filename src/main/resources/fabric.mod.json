@@ -5,7 +5,7 @@
   "name": "AshleyClient",
   "environment": "client",
   "entrypoints": {
-    "main": ["lol.moruto.mod.Core"]
+    "main": ["lol.moruto.client.Core"]
   },
   "mixins": ["ashleyclient.mixins.json"],
   "depends": {
