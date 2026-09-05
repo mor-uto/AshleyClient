@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "ashleyclient",
+  "version": "${version}",
+  "name": "AshleyClient",
+  "environment": "client",
+  "entrypoints": {
+    "main": ["lol.moruto.mod.Core"]
+  },
+  "mixins": ["ashleyclient.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}

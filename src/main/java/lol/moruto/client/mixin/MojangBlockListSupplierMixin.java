@@ -1,0 +1,19 @@
+package lol.moruto.mod.mixin;
+
+import com.mojang.patchy.MojangBlockListSupplier;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+
+import java.util.function.Predicate;
+
+@Mixin(value = MojangBlockListSupplier.class, remap = false)
+public class MojangBlockListSupplierMixin {
+    /**
+     * @author Ashley
+     * @reason Fun
+     */
+    @Overwrite
+    public Predicate<String> createBlockList() {
+        return s -> false;
+    }
+}
