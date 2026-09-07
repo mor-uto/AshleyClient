@@ -1,48 +1,109 @@
 package lol.moruto.client.config;
 
-import java.lang.reflect.*;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import lol.moruto.client.Core;
+import lol.moruto.client.module.Module;
+import lol.moruto.client.module.ModuleSetting;
+import net.minecraft.client.MinecraftClient;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ConfigManager {
-    private final FileConfiguration config;
+    private final File configFile;
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    public ConfigManager(FileConfiguration config) {
-        this.config = config;
+    public ConfigManager() {
+        configFile = new File(MinecraftClient.getInstance().runDirectory, "ashleyclient.json");
     }
 
-    public void loadConfig(Object instance) {
-        Class<?> clazz = instance.getClass();
-        for (Field field : clazz.getDeclaredFields()) {
-            if (field.isAnnotationPresent(ConfigEntry.class)) {
-                ConfigEntry entry = field.getAnnotation(ConfigEntry.class);
-                String path = entry.value();
+    public void save() {
+        JsonObject root = new JsonObject();
+        JsonObject modules = new JsonObject();
 
-                try {
-                    field.setAccessible(true);
-                    boolean isStatic = Modifier.isStatic(field.getModifiers());
-                    Object defaultValue = field.get(isStatic ? null : instance);
+        for (Module module : Core.instance.getModulesManager().getModules()) {
+            JsonObject moduleObject = new JsonObject();
+            moduleObject.addProperty("enabled", module.isToggled());
 
-                    if (!config.contains(path)) {
-                        config.set(path, defaultValue);
-                        config.save();
-                    }
+            JsonObject settings = new JsonObject();
 
-                    Object value = getConfigValue(path, field.getType());
-                    field.set(isStatic ? null : instance, value);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+            for (ModuleSetting<?> setting : module.getSettings()) {
+                Object value = setting.getValue();
+                settings.add(setting.getName(), gson.toJsonTree(value));
             }
+
+            moduleObject.add("settings", settings);
+            modules.add(module.getName(), moduleObject);
+        }
+
+        root.add("modules", modules);
+
+        try (FileWriter writer = new FileWriter(configFile)) {
+            gson.toJson(root, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private Object getConfigValue(String path, Class<?> type) {
-        if (type == String.class) return config.getString(path);
-        if (type == int.class || type == Integer.class) return config.getInt(path);
-        if (type == boolean.class || type == Boolean.class) return config.getBoolean(path);
-        if (type == double.class || type == Double.class) return config.getDouble(path);
-        if (type == long.class || type == Long.class) return config.getLong(path);
-        if (type == List.class) return config.getList(path);
-        return config.get(path);
+    public void load() {
+        if (!configFile.exists()) return;
+
+        try (FileReader reader = new FileReader(configFile)) {
+            JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+            JsonObject modules = root.getAsJsonObject("modules");
+
+            if (modules == null) return;
+
+            for (Module module : Core.instance.getModulesManager().getModules()) {
+                if (!modules.has(module.getName())) continue;
+
+                JsonObject moduleObject = modules.getAsJsonObject(module.getName());
+
+                if (moduleObject.has("enabled")) {
+                    boolean enabled = moduleObject.get("enabled").getAsBoolean();
+
+                    if (enabled != module.isToggled()) {
+                        module.toggle();
+                    }
+                }
+
+                if (!moduleObject.has("settings")) continue;
+
+                JsonObject settings = moduleObject.getAsJsonObject("settings");
+
+                for (ModuleSetting<?> setting : module.getSettings()) {
+                    if (!settings.has(setting.getName())) continue;
+
+                    JsonObject settingValue = settings;
+                    loadSetting(setting, settingValue.get(setting.getName()));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void loadSetting(ModuleSetting setting, com.google.gson.JsonElement element) {
+        Object currentValue = setting.getValue();
+
+        if (currentValue instanceof Boolean) {
+            setting.setValue(element.getAsBoolean());
+        } else if (currentValue instanceof Integer) {
+            setting.setValue(element.getAsInt());
+        } else if (currentValue instanceof Double) {
+            setting.setValue(element.getAsDouble());
+        } else if (currentValue instanceof Float) {
+            setting.setValue(element.getAsFloat());
+        } else if (currentValue instanceof Long) {
+            setting.setValue(element.getAsLong());
+        } else if (currentValue instanceof String) {
+            setting.setValue(element.getAsString());
+        }
     }
 }

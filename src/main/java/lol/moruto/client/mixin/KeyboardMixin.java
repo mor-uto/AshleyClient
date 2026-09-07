@@ -16,10 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class KeyboardMixin {
     @Inject(at = @At("HEAD"), method = "onKey")
     private void onKeyPress(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
-        checkInput(key, action);
-    }
-
-    private void checkInput(int key, int action) {
         if (!RenderSystem.isOnRenderThread()) return;
 
         if (key == GLFW.GLFW_KEY_RIGHT_SHIFT && action == 1) {

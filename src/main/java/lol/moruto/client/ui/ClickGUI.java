@@ -3,7 +3,9 @@ package lol.moruto.client.ui;
 import lol.moruto.client.Core;
 import lol.moruto.client.module.Category;
 import lol.moruto.client.module.ModuleSetting;
+import lol.moruto.client.module.impl.setting.KeybindSetting;
 import lol.moruto.client.module.impl.setting.NumberSetting;
+import lol.moruto.client.module.impl.setting.StringSetting;
 import lol.moruto.client.ui.component.CategoryButton;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -295,13 +297,9 @@ public class ClickGUI extends Screen {
         int contentX = x + SIDEBAR_WIDTH + 20;
         int contentWidth = WIDTH - SIDEBAR_WIDTH - 35;
 
-        int moduleY = y + 55 - (int) scrollOffset;
-
         List<Module> modules = Core.instance.getModulesManager().getModulesByCategory(selectedCategory);
 
         for (Module module : modules) {
-            moduleY += MODULE_HEIGHT + MODULE_SPACING;
-
             if (module.isExpanded() && module.hasSettings()) {
 
                 for (ModuleSetting<?> setting : module.getSettings()) {
@@ -314,15 +312,45 @@ public class ClickGUI extends Screen {
 
                         return true;
                     }
-
-                    moduleY += SETTING_HEIGHT + SETTING_SPACING;
                 }
-
-                moduleY += MODULE_SPACING;
             }
         }
 
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        for (Module module : Core.instance.getModulesManager().getModulesByCategory(selectedCategory)) {
+            for (ModuleSetting<?> setting : module.getSettings()) {
+                if (setting instanceof StringSetting stringSetting) {
+                    if (stringSetting.keyPressed(keyCode, scanCode, modifiers)) {
+                        return true;
+                    }
+                }
+
+                if (setting instanceof KeybindSetting keybindSetting && keybindSetting.keyPressed(keyCode, scanCode, modifiers)) {
+                    return true;
+                }
+            }
+        }
+
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean charTyped(char chr, int modifiers) {
+        for (Module module : Core.instance.getModulesManager().getModulesByCategory(selectedCategory)) {
+            for (ModuleSetting<?> setting : module.getSettings()) {
+                if (setting instanceof StringSetting stringSetting) {
+                    if (stringSetting.charTyped(chr, modifiers)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return super.charTyped(chr, modifiers);
     }
 
     @Override

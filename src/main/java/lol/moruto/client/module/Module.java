@@ -1,8 +1,8 @@
 package lol.moruto.client.module;
 
+import lol.moruto.client.module.impl.setting.KeybindSetting;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ public abstract class Module {
     private final String description;
     private final Category category;
     private boolean toggled;
-    private final int keyCode;
+    private final KeybindSetting keybindSetting = new KeybindSetting("Keybind", -1);
 
     private final List<ModuleSetting<?>> settings = new ArrayList<>();
     private boolean expanded = false;
@@ -20,15 +20,11 @@ public abstract class Module {
     public final MinecraftClient mc = MinecraftClient.getInstance();
 
     public Module(String name, String description, Category category) {
-        this(name, description, category, GLFW.GLFW_KEY_UNKNOWN);
-    }
-
-    public Module(String name, String description, Category category, int keyCode) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.toggled = false;
-        this.keyCode = keyCode;
+        addSetting(keybindSetting);
     }
 
     public final void toggle() {
@@ -42,7 +38,7 @@ public abstract class Module {
     public void onUpdate() {}
     public void render(DrawContext context) {}
 
-    public int getKeyCode() { return keyCode; }
+    public int getKeyCode() { return keybindSetting.getKey(); }
 
     public void addSetting(ModuleSetting<?> setting) {
         settings.add(setting);
@@ -64,8 +60,12 @@ public abstract class Module {
         return expanded;
     }
 
-    public void collapse() {
-        this.expanded = false;
+    public ModuleSetting<?> getSetting(String name) {
+        for (ModuleSetting moduleSetting : settings) {
+            if (moduleSetting.name.equals(name)) return moduleSetting;
+        }
+
+        return null;
     }
 
     public String getName() { return name; }

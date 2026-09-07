@@ -1,6 +1,8 @@
 package lol.moruto.client.module;
 
 import lol.moruto.client.module.impl.*;
+import lol.moruto.client.module.impl.combat.AnchorSpam;
+import lol.moruto.client.module.impl.combat.AutoTotem;
 import lol.moruto.client.module.impl.gui.*;
 import lol.moruto.client.module.impl.misc.*;
 import lol.moruto.client.module.impl.movement.*;
@@ -11,15 +13,13 @@ import java.util.stream.Collectors;
 
 public class ModulesManager {
     private final List<Module> modules = List.of(
-            new PlaceholderModule(Category.COMBAT),
-            new PlaceholderModule(Category.COMBAT),
-            new PlaceholderModule(Category.COMBAT),
-            new PlaceholderModule(Category.COMBAT),
+            //Combat
+            new AutoTotem(),
+            new AnchorSpam(),
 
 
             //Movement
             new Fly(),
-
             new AntiAFK(),
             new Jesus(),
             new NoFall(),
@@ -34,6 +34,7 @@ public class ModulesManager {
             new AutoRespawn(),
             new IgnoreResourcePack(),
             new SpamPackets(),
+            new ClientBrand(),
 
 
             new PlaceholderModule("notification test", Category.COMBAT) {

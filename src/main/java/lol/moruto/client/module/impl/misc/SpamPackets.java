@@ -16,7 +16,7 @@ public class SpamPackets extends Module {
         int amount = 20;
 
         for (int i = 0; i < amount; i++) {
-            ClientPlayNetworking.send(new BrandCustomPayload("A".repeat(30_000)));
+            ClientPlayNetworking.send(new BrandCustomPayload("A".repeat(100)));
         }
 
         NotificationManager.sendNotification("Spammed " + amount + " Packets");
