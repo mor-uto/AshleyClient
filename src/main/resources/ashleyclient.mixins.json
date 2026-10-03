@@ -4,12 +4,12 @@
   "package": "lol.moruto.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MojangBlockListSupplierMixin",
     "ClientBrandRetrieverMixin",
     "ClientCommonNetworkHandlerMixin",
     "InGameHudMixin",
     "KeyboardMixin",
     "MinecraftClientMixin",
+    "MojangBlockListSupplierMixin",
     "TelemetryManagerMixin"
   ],
   "injectors": {

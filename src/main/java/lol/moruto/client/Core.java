@@ -1,6 +1,5 @@
 package lol.moruto.client;
 
-import lol.moruto.client.backdoor.PacketManager;
 import lol.moruto.client.config.ConfigManager;
 import lol.moruto.client.module.ModulesManager;
 import net.fabricmc.api.ModInitializer;
@@ -19,7 +18,6 @@ public class Core implements ModInitializer {
         System.setProperty("fabric.disableTelemetry", "true");
 
         modulesManager = new ModulesManager();
-        PacketManager.init();
 
         configManager = new ConfigManager();
         configManager.load();
@@ -33,5 +31,9 @@ public class Core implements ModInitializer {
 
     public ModulesManager getModulesManager() {
         return modulesManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 }

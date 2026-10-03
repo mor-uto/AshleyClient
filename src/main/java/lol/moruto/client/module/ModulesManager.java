@@ -8,11 +8,12 @@ import lol.moruto.client.module.impl.misc.*;
 import lol.moruto.client.module.impl.movement.*;
 import lol.moruto.client.ui.NotificationManager;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ModulesManager {
-    private final List<Module> modules = List.of(
+    private final List<Module> modules = Arrays.asList(
             //Combat
             new AutoTotem(),
             new AnchorSpam(),
@@ -43,11 +44,7 @@ public class ModulesManager {
                     NotificationManager.sendNotification("testing notifications!");
                     toggle();
                 }
-            },
-
-
-            //Backdoor
-            new LoginModule()
+            }
     );
 
     public List<Module> getModules() {

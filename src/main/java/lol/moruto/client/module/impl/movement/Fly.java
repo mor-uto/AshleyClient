@@ -10,6 +10,7 @@ public class Fly extends Module {
 
     @Override
     public void onEnable() {
+        if (mc.player == null) return;
         mc.player.getAbilities().allowFlying = true;
         mc.player.getAbilities().flying = true;
     }
