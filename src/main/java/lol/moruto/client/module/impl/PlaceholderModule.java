@@ -15,5 +15,7 @@ public class PlaceholderModule extends Module {
         addSetting(new BooleanSetting("test", false));
         addSetting(new NumberSetting("test", 1, 0, 1, 0.1));
         addSetting(new ModeSetting("modes", "mode1", "mode2", "mode3"));
+        addSetting(new StringSetting("test", "test"));
+        addSetting(new KeybindSetting("testKey", 0));
     }
 }

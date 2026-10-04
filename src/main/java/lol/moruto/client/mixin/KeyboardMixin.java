@@ -6,6 +6,7 @@ import lol.moruto.client.module.Module;
 import lol.moruto.client.ui.ClickGUI;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatScreen;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +28,7 @@ public class KeyboardMixin {
         }
 
         for (Module module : Core.instance.getModulesManager().getModules()) {
-            if (key == module.getKeyCode() && action == 1) {
+            if (key == module.getKeyCode() && action == 1 && !(MinecraftClient.getInstance().currentScreen instanceof ChatScreen)) {
                 module.toggle();
                 break;
             }

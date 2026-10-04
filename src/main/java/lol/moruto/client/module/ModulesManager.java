@@ -38,6 +38,7 @@ public class ModulesManager {
             new SpamPackets(),
             new ClientBrand(),
             new Zoom(),
+            new PluginScanner(),
 
 
             new PlaceholderModule("notification test", Category.COMBAT) {

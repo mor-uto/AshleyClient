@@ -3,6 +3,7 @@ package lol.moruto.client.mixin;
 import lol.moruto.client.Core;
 import lol.moruto.client.module.Module;
 import lol.moruto.client.ui.NotificationManager;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameHudMixin {
     @Inject(method = "renderHotbar", at = @At("HEAD"))
     private void onRender(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        //context.drawText(mc.textRenderer, "Ashley Client v1.0", 10, 5, -1, true);
+        context.drawText(MinecraftClient.getInstance().textRenderer, "Ashley Client v1.0", 10, 5, -1, true);
 
         NotificationManager.render(context);
 

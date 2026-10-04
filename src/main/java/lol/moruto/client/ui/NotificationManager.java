@@ -91,13 +91,5 @@ public class NotificationManager {
         return t * t * t;
     }
 
-    private static class Notification {
-        final String message;
-        final long startTime;
-
-        Notification(String message, long startTime) {
-            this.message = message;
-            this.startTime = startTime;
-        }
-    }
+    private record Notification(String message, long startTime) {}
 }
