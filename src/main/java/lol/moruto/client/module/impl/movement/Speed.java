@@ -6,31 +6,56 @@ import lol.moruto.client.module.impl.setting.NumberSetting;
 import net.minecraft.util.math.Vec3d;
 
 public class Speed extends Module {
-    private final NumberSetting boostSetting = new NumberSetting("Speed", 0.1, 0.1, 1, 0.1);
+
+    private final NumberSetting speedSetting = new NumberSetting("Speed", 0.1, 0.1, 1.0, 0.1);
 
     public Speed() {
         super("Speed", "Increases the player's movement speed", Category.MOVEMENT);
-        addSetting(boostSetting);
+        addSetting(speedSetting);
     }
 
     @Override
     public void onUpdate() {
-
         if (mc.player == null || mc.player.input == null) return;
-        final double BOOST = boostSetting.getValue() * 0.5;
 
-        float forward = mc.player.input.playerInput.forward() ? 1 : mc.player.input.playerInput.backward() ? -1 : 0;
-        float sideways = mc.player.input.playerInput.right() ? -1 : mc.player.input.playerInput.left() ? 1 : 0;
-        if (forward == 0 && sideways == 0) return;
+        boolean forward = mc.player.input.playerInput.forward();
+        boolean backward = mc.player.input.playerInput.backward();
+        boolean left = mc.player.input.playerInput.left();
+        boolean right = mc.player.input.playerInput.right();
 
-        double yaw = Math.toRadians(mc.player.getYaw());
-        double sin = Math.sin(yaw);
-        double cos = Math.cos(yaw);
+        double forwardInput = 0.0;
+        double sidewaysInput = 0.0;
 
-        double xDir = (forward * -sin + sideways * cos) * BOOST;
-        double zDir = (forward * cos + sideways * sin) * BOOST;
+        if (forward) forwardInput += 1.0;
+        if (backward) forwardInput -= 1.0;
+        if (left) sidewaysInput += 1.0;
+        if (right) sidewaysInput -= 1.0;
+
+        if (forwardInput == 0.0 && sidewaysInput == 0.0) return;
+
+        double length = Math.sqrt(forwardInput * forwardInput + sidewaysInput * sidewaysInput);
+
+        forwardInput /= length;
+        sidewaysInput /= length;
+
+        double speed = speedSetting.getValue();
+
+        float yaw = mc.player.getYaw();
+
+        double radians = Math.toRadians(yaw);
+        double sin = Math.sin(radians);
+        double cos = Math.cos(radians);
+
+        double motionX = (forwardInput * -sin + sidewaysInput * cos) * speed;
+
+        double motionZ = (forwardInput * cos + sidewaysInput * sin) * speed;
 
         Vec3d velocity = mc.player.getVelocity();
-        mc.player.setVelocity(velocity.x + xDir, velocity.y, velocity.z + zDir);
+
+        mc.player.setVelocity(
+                motionX,
+                velocity.y,
+                motionZ
+        );
     }
 }

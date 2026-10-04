@@ -33,8 +33,4 @@ public class KeyboardMixin {
             }
         }
     }
-
-    static {
-        System.out.println("========== KEYBOARD MIXIN LOADED ==========");
-    }
 }

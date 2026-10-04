@@ -31,7 +31,7 @@ public class KeybindSetting extends ModuleSetting<Integer> {
     }
 
     private String getKeyName() {
-        if (value == GLFW.GLFW_KEY_UNKNOWN || value == -1) return "None";
+        if (value == GLFW.GLFW_KEY_UNKNOWN) return "None";
         String name = GLFW.glfwGetKeyName(value, 0);
         if (name != null) return name.toUpperCase();
         return switch (value) {

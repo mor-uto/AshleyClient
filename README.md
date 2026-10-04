@@ -32,6 +32,7 @@ a multi-purpose client
 - Jesus
 - NoFall
 - Speed
+- ClickTP
 </details>
 
 <img src="github/pic1.png" alt="AshleyClient" width="2560">

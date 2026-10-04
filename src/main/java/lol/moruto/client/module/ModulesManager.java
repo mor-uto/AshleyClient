@@ -26,6 +26,7 @@ public class ModulesManager {
             new NoFall(),
             new AutoSprint(),
             new Speed(),
+            new ClickTP(),
 
             //GUI
             new ArrayList(),
@@ -36,6 +37,7 @@ public class ModulesManager {
             new IgnoreResourcePack(),
             new SpamPackets(),
             new ClientBrand(),
+            new Zoom(),
 
 
             new PlaceholderModule("notification test", Category.COMBAT) {
