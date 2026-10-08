@@ -31,10 +31,6 @@ public class AnchorSpam extends Module {
 
     @Override
     public void onUpdate() {
-        if (mc.player == null || mc.world == null || mc.interactionManager == null) {
-            return;
-        }
-
         if (delay > 0) {
             delay--;
             return;
@@ -59,7 +55,6 @@ public class AnchorSpam extends Module {
 
         var stateAtPos = mc.world.getBlockState(hit.getBlockPos());
 
-        // PLACE
         if (state == State.PLACE) {
             mc.player.getInventory().setSelectedSlot(anchorSlot);
 
@@ -68,12 +63,7 @@ public class AnchorSpam extends Module {
                 return;
             }
 
-            mc.interactionManager.interactBlock(
-                    mc.player,
-                    Hand.MAIN_HAND,
-                    hit
-            );
-
+            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
             mc.player.swingHand(Hand.MAIN_HAND);
 
             state = State.CHARGE;
@@ -81,7 +71,6 @@ public class AnchorSpam extends Module {
             return;
         }
 
-        // Make sure the anchor actually exists
         if (!stateAtPos.isOf(Blocks.RESPAWN_ANCHOR)) {
             state = State.PLACE;
             return;
@@ -89,10 +78,7 @@ public class AnchorSpam extends Module {
 
         int charges = stateAtPos.get(RespawnAnchorBlock.CHARGES);
 
-        // CHARGE
         if (state == State.CHARGE) {
-
-            // Wait until the first glowstone charge has registered
             if (charges >= 1) {
                 state = State.EXPLODE;
                 return;
@@ -100,34 +86,20 @@ public class AnchorSpam extends Module {
 
             mc.player.getInventory().setSelectedSlot(glowstoneSlot);
 
-            mc.interactionManager.interactBlock(
-                    mc.player,
-                    Hand.MAIN_HAND,
-                    hit
-            );
-
+            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
             mc.player.swingHand(Hand.MAIN_HAND);
 
-            // Stay in CHARGE until the server/world reports 1 charge
             delay = 1;
             return;
         }
 
-        // EXPLODE
         if (state == State.EXPLODE) {
-
-            // Don't explode until exactly/at least one charge exists
             if (charges < 1) {
                 state = State.CHARGE;
                 return;
             }
 
-            mc.interactionManager.interactBlock(
-                    mc.player,
-                    Hand.MAIN_HAND,
-                    hit
-            );
-
+            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
             mc.player.swingHand(Hand.MAIN_HAND);
 
             state = State.PLACE;
