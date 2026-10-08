@@ -1,5 +1,6 @@
 package lol.moruto.client.ui;
 
+import lol.moruto.client.Core;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
@@ -22,19 +23,28 @@ public class NotificationManager {
     private static final int ACCENT = 0xFF9B59FF;
     private static final int BACKGROUND = 0xE814141A;
 
+    private static boolean arrayListWasEnabled;
+
+    static lol.moruto.client.module.impl.gui.ArrayList arrayList = (lol.moruto.client.module.impl.gui.ArrayList) Core.instance.getModulesManager().getModule("ArrayList");
+
     public static void sendNotification(String message) {
+        if (notifications.isEmpty())
+            disableArrayList();
+
         notifications.add(new Notification(message, System.currentTimeMillis()));
     }
 
     public static void render(DrawContext drawContext) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client == null || client.getWindow() == null) return;
+        if (client == null || client.getWindow() == null)
+            return;
 
         int screenWidth = client.getWindow().getScaledWidth();
         long now = System.currentTimeMillis();
         int y = MARGIN;
 
         Iterator<Notification> iterator = notifications.iterator();
+
         while (iterator.hasNext()) {
             Notification n = iterator.next();
             long age = now - n.startTime;
@@ -45,40 +55,126 @@ public class NotificationManager {
             }
 
             float alpha;
+
             if (age < FADE_IN) {
                 alpha = easeOut((float) age / FADE_IN);
             } else if (age < FADE_IN + VISIBLE) {
                 alpha = 1f;
             } else {
-                alpha = 1f - easeIn((float) (age - FADE_IN - VISIBLE) / FADE_OUT);
+                alpha = 1f - easeIn(
+                        (float) (age - FADE_IN - VISIBLE) / FADE_OUT
+                );
             }
 
             String text = n.message;
             int textWidth = client.textRenderer.getWidth(text);
-            int width = Math.min(textWidth + PADDING * 2 + 18, screenWidth - MARGIN * 2);
+            int width = Math.min(
+                    textWidth + PADDING * 2 + 18,
+                    screenWidth - MARGIN * 2
+            );
+
             int targetX = screenWidth - width - MARGIN;
 
-            float slide = easeOut(Math.min(1f, (float) age / FADE_IN));
-            int x = (int) (screenWidth + 10 - (screenWidth + 10 - targetX) * slide);
+            float slide = easeOut(
+                    Math.min(1f, (float) age / FADE_IN)
+            );
+
+            int x = (int) (
+                    screenWidth + 10 -
+                            (screenWidth + 10 - targetX) * slide
+            );
+
             int drawY = y + (int) (6 * (1f - slide));
 
-            int bg = ((int) (0xE8 * alpha) << 24) | (BACKGROUND & 0xFFFFFF);
-            int accent = ((int) (255 * alpha) << 24) | (ACCENT & 0xFFFFFF);
-            int white = ((int) (255 * alpha) << 24) | 0xFFFFFF;
+            int bg = ((int) (0xE8 * alpha) << 24)
+                    | (BACKGROUND & 0xFFFFFF);
 
-            drawContext.fill(x + 2, drawY + 2, x + width + 2, drawY + BOX_HEIGHT + 2, ((int) (70 * alpha) << 24));
-            drawContext.fill(x, drawY, x + width, drawY + BOX_HEIGHT, bg);
-            drawContext.fill(x, drawY, x + 3, drawY + BOX_HEIGHT, accent);
-            drawContext.fill(x + 9, drawY + 11, x + 13, drawY + 15, accent);
-            drawContext.drawText(client.textRenderer, text, x + 19, drawY + 9, white, false);
+            int accent = ((int) (255 * alpha) << 24)
+                    | (ACCENT & 0xFFFFFF);
+
+            int white = ((int) (255 * alpha) << 24)
+                    | 0xFFFFFF;
+
+            drawContext.fill(
+                    x + 2,
+                    drawY + 2,
+                    x + width + 2,
+                    drawY + BOX_HEIGHT + 2,
+                    ((int) (70 * alpha) << 24)
+            );
+
+            drawContext.fill(
+                    x,
+                    drawY,
+                    x + width,
+                    drawY + BOX_HEIGHT,
+                    bg
+            );
+
+            drawContext.fill(
+                    x,
+                    drawY,
+                    x + 3,
+                    drawY + BOX_HEIGHT,
+                    accent
+            );
+
+            drawContext.fill(
+                    x + 9,
+                    drawY + 11,
+                    x + 13,
+                    drawY + 15,
+                    accent
+            );
+
+            drawContext.drawText(
+                    client.textRenderer,
+                    text,
+                    x + 19,
+                    drawY + 9,
+                    white,
+                    false
+            );
 
             long total = FADE_IN + VISIBLE + FADE_OUT;
             float progress = Math.min(1f, (float) age / total);
-            int progressWidth = (int) ((width - 3) * (1f - progress));
-            drawContext.fill(x + 3, drawY + BOX_HEIGHT - 2, x + 3 + progressWidth, drawY + BOX_HEIGHT, accent);
+
+            int progressWidth =
+                    (int) ((width - 3) * (1f - progress));
+
+            drawContext.fill(
+                    x + 3,
+                    drawY + BOX_HEIGHT - 2,
+                    x + 3 + progressWidth,
+                    drawY + BOX_HEIGHT,
+                    accent
+            );
 
             y += BOX_HEIGHT + GAP;
         }
+
+        if (notifications.isEmpty())
+            enableArrayList();
+    }
+
+    private static void disableArrayList() {
+        if (arrayList == null)
+            return;
+
+        arrayListWasEnabled = arrayList.isToggled();
+
+        if (arrayListWasEnabled)
+            arrayList.toggle();
+    }
+
+    private static void enableArrayList() {
+        if (!arrayListWasEnabled)
+            return;
+
+        if (arrayList != null && !arrayList.isToggled())
+            arrayList.toggle();
+
+        arrayListWasEnabled = false;
     }
 
     private static float easeOut(float t) {

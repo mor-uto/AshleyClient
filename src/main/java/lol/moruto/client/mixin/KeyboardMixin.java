@@ -19,8 +19,6 @@ public class KeyboardMixin {
     private void onKeyPress(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         if (!RenderSystem.isOnRenderThread()) return;
 
-        System.out.println(key + " " + action);
-
         if (key == GLFW.GLFW_KEY_RIGHT_SHIFT && action == 1) {
             if (MinecraftClient.getInstance().currentScreen == null) {
                 MinecraftClient.getInstance().setScreen(new ClickGUI());

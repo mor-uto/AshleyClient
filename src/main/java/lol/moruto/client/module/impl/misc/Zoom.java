@@ -8,7 +8,6 @@ public class Zoom extends Module {
 
     public Zoom() {
         super("Zoom", "Zooms the camera in", Category.MISC);
-
     }
 
     @Override

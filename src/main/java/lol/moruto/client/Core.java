@@ -14,9 +14,6 @@ public class Core implements ModInitializer {
     public void onInitialize() {
         instance = this;
 
-        System.setProperty("fabric.dfu.enabled", "false");
-        System.setProperty("fabric.disableTelemetry", "true");
-
         modulesManager = new ModulesManager();
 
         configManager = new ConfigManager();

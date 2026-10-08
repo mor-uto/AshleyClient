@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 @Mixin(value = MojangBlockListSupplier.class, remap = false)
 public class MojangBlockListSupplierMixin {
     /**
-     * @author Ashley
-     * @reason Fun
+     * @author Moruto_
+     * @reason Bypass Blocklist
      */
     @Overwrite
     public Predicate<String> createBlockList() {

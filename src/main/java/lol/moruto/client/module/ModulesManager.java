@@ -39,6 +39,8 @@ public class ModulesManager {
             new ClientBrand(),
             new Zoom(),
             new PluginScanner(),
+            new EncryptChat(),
+            new BorderlessFullscreen(),
 
 
             new PlaceholderModule("notification test", Category.COMBAT) {
