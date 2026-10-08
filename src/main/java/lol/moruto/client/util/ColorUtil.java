@@ -7,6 +7,10 @@ public class ColorUtil {
         return Color.HSBtoRGB((System.currentTimeMillis() % 10000L / 10000F + offset), 1.0f, 1.0f);
     }
 
+    public static String trans(String input) {
+        return input.replace('&', '§');
+    }
+
     public static int rgbToHex(int r, int g, int b) {
         return (255 << 24) | (r << 16) | (g << 8) | b;
     }

@@ -5,12 +5,8 @@ import lol.moruto.client.module.Module;
 import lol.moruto.client.module.impl.setting.*;
 
 public class PlaceholderModule extends Module {
-    public PlaceholderModule(String name, Category category) {
-        super(name, "", category);
-    }
-
-    public PlaceholderModule(Category category) {
-        super("Placeholder", "", category);
+    public PlaceholderModule(String name, String description, Category category) {
+        super(name, description, category);
 
         addSetting(new BooleanSetting("test", false));
         addSetting(new NumberSetting("test", 1, 0, 1, 0.1));

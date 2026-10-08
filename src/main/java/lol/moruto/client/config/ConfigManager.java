@@ -20,6 +20,7 @@ public class ConfigManager {
 
     public ConfigManager() {
         configFile = new File(MinecraftClient.getInstance().runDirectory, "ashleyclient.json");
+        load();
     }
 
     public void save() {

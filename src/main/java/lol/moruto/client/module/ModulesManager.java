@@ -2,7 +2,12 @@ package lol.moruto.client.module;
 
 import lol.moruto.client.module.impl.*;
 import lol.moruto.client.module.impl.combat.AnchorSpam;
+import lol.moruto.client.module.impl.combat.AutoClicker;
 import lol.moruto.client.module.impl.combat.AutoTotem;
+import lol.moruto.client.module.impl.grief.BanAll;
+import lol.moruto.client.module.impl.grief.KickAll;
+import lol.moruto.client.module.impl.grief.MuteAll;
+import lol.moruto.client.module.impl.grief.OPEveryone;
 import lol.moruto.client.module.impl.gui.*;
 import lol.moruto.client.module.impl.misc.*;
 import lol.moruto.client.module.impl.movement.*;
@@ -17,7 +22,7 @@ public class ModulesManager {
             //Combat
             new AutoTotem(),
             new AnchorSpam(),
-
+            new AutoClicker(),
 
             //Movement
             new Fly(),
@@ -27,6 +32,7 @@ public class ModulesManager {
             new AutoSprint(),
             new Speed(),
             new ClickTP(),
+            new Safewalk(),
 
             //GUI
             new ArrayList(),
@@ -40,10 +46,15 @@ public class ModulesManager {
             new Zoom(),
             new PluginScanner(),
             new EncryptChat(),
-            new BorderlessFullscreen(),
+
+            //GRIEF
+            new OPEveryone(),
+            new KickAll(),
+            new BanAll(),
+            new MuteAll(),
 
 
-            new PlaceholderModule("notification test", Category.COMBAT) {
+            new PlaceholderModule("notification test", "Testing the notification system", Category.MISC) {
                 @Override
                 public void onEnable() {
                     NotificationManager.sendNotification("testing notifications!");

@@ -4,5 +4,6 @@ public enum Category {
     COMBAT,
     MOVEMENT,
     MISC,
-    GUI
+    GUI,
+    GRIEF
 }

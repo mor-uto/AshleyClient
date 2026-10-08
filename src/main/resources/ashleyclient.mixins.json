@@ -6,8 +6,6 @@
   "mixins": [
     "ClientBrandRetrieverMixin",
     "ClientCommonNetworkHandlerMixin",
-    "InGameHudMixin",
-    "KeyboardMixin",
     "MinecraftClientMixin",
     "MojangBlockListSupplierMixin",
     "SchemasMixin",

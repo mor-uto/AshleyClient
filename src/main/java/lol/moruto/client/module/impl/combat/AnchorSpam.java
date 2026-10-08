@@ -4,13 +4,14 @@ import lol.moruto.client.module.Category;
 import lol.moruto.client.module.Module;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RespawnAnchorBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 
 public class AnchorSpam extends Module {
+
     private enum State {
         PLACE,
         CHARGE,
@@ -18,38 +19,61 @@ public class AnchorSpam extends Module {
     }
 
     private State state = State.PLACE;
-    private int delay = 0;
+    private int delay;
 
     public AnchorSpam() {
-        super("AnchorSpam", "Auto place, charge and explode anchors", Category.COMBAT);
+        super(
+                "AnchorSpam",
+                "Auto place, charge and explode anchors",
+                Category.COMBAT
+        );
     }
 
     @Override
     public void onUpdate() {
-        if (mc.player == null || mc.world == null || mc.interactionManager == null) return;
+        if (mc.player == null || mc.world == null || mc.interactionManager == null) {
+            return;
+        }
+
         if (delay > 0) {
             delay--;
             return;
         }
 
-        if (!(mc.crosshairTarget instanceof BlockHitResult hit)) return;
-        if (hit.getType() != HitResult.Type.BLOCK) return;
-        if (mc.player.getMainHandStack().getItem() != Items.RESPAWN_ANCHOR) return;
+        if (!(mc.crosshairTarget instanceof BlockHitResult hit)) {
+            return;
+        }
+
+        if (!mc.world.getBlockState(hit.getBlockPos()).isOf(Blocks.RESPAWN_ANCHOR)) {
+            if (state != State.PLACE) {
+                state = State.PLACE;
+            }
+        }
 
         int anchorSlot = findHotbarItem(Items.RESPAWN_ANCHOR);
         int glowstoneSlot = findHotbarItem(Items.GLOWSTONE);
-        int emptySlot = findEmptyHotbarSlot();
 
-        if (anchorSlot == -1 || glowstoneSlot == -1 || emptySlot == -1) return;
+        if (anchorSlot == -1 || glowstoneSlot == -1) {
+            return;
+        }
 
+        var stateAtPos = mc.world.getBlockState(hit.getBlockPos());
+
+        // PLACE
         if (state == State.PLACE) {
-            if (mc.world.getBlockState(hit.getBlockPos()).isOf(Blocks.RESPAWN_ANCHOR)) {
+            mc.player.getInventory().setSelectedSlot(anchorSlot);
+
+            if (stateAtPos.isOf(Blocks.RESPAWN_ANCHOR)) {
                 state = State.CHARGE;
                 return;
             }
 
-            mc.player.getInventory().setSelectedSlot(anchorSlot);
-            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+            mc.interactionManager.interactBlock(
+                    mc.player,
+                    Hand.MAIN_HAND,
+                    hit
+            );
+
             mc.player.swingHand(Hand.MAIN_HAND);
 
             state = State.CHARGE;
@@ -57,36 +81,53 @@ public class AnchorSpam extends Module {
             return;
         }
 
-        if (!mc.world.getBlockState(hit.getBlockPos()).isOf(Blocks.RESPAWN_ANCHOR)) {
+        // Make sure the anchor actually exists
+        if (!stateAtPos.isOf(Blocks.RESPAWN_ANCHOR)) {
             state = State.PLACE;
             return;
         }
 
-        int charges = mc.world.getBlockState(hit.getBlockPos()).get(RespawnAnchorBlock.CHARGES);
+        int charges = stateAtPos.get(RespawnAnchorBlock.CHARGES);
 
+        // CHARGE
         if (state == State.CHARGE) {
+
+            // Wait until the first glowstone charge has registered
             if (charges >= 1) {
                 state = State.EXPLODE;
                 return;
             }
 
             mc.player.getInventory().setSelectedSlot(glowstoneSlot);
-            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+
+            mc.interactionManager.interactBlock(
+                    mc.player,
+                    Hand.MAIN_HAND,
+                    hit
+            );
+
             mc.player.swingHand(Hand.MAIN_HAND);
 
-            state = State.EXPLODE;
+            // Stay in CHARGE until the server/world reports 1 charge
             delay = 1;
             return;
         }
 
+        // EXPLODE
         if (state == State.EXPLODE) {
+
+            // Don't explode until exactly/at least one charge exists
             if (charges < 1) {
                 state = State.CHARGE;
                 return;
             }
 
-            mc.player.getInventory().setSelectedSlot(emptySlot);
-            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+            mc.interactionManager.interactBlock(
+                    mc.player,
+                    Hand.MAIN_HAND,
+                    hit
+            );
+
             mc.player.swingHand(Hand.MAIN_HAND);
 
             state = State.PLACE;
@@ -94,18 +135,13 @@ public class AnchorSpam extends Module {
         }
     }
 
-    private int findHotbarItem(net.minecraft.item.Item item) {
+    private int findHotbarItem(Item item) {
         for (int i = 0; i < 9; i++) {
             ItemStack stack = mc.player.getInventory().getStack(i);
-            if (stack.isOf(item)) return i;
-        }
 
-        return -1;
-    }
-
-    private int findEmptyHotbarSlot() {
-        for (int i = 0; i < 9; i++) {
-            if (mc.player.getInventory().getStack(i).isEmpty()) return i;
+            if (stack.isOf(item)) {
+                return i;
+            }
         }
 
         return -1;
